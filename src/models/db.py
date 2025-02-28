@@ -20,11 +20,11 @@ def connect_to_db():
     cursor.execute(
         "CREATE TABLE IF NOT EXISTS event_properties (name TEXT, event_name TEXT, volume INTEGER, first_seen TEXT, last_seen TEXT, FOREIGN KEY(event_name) REFERENCES events(name))")
     cursor.execute(
-        "CREATE TABLE IF NOT EXISTS event_properties_values (name TEXT UNIQUE, event_name TEXT UNIQUE, value TEXT, volume INTEGER, first_seen TEXT, last_seen TEXT, FOREIGN KEY(name) REFERENCES event_properties(name), FOREIGN KEY(event_name) REFERENCES events(name))")
+        "CREATE TABLE IF NOT EXISTS event_properties_values (name TEXT, event_name TEXT, value TEXT, volume INTEGER, first_seen TEXT, last_seen TEXT, FOREIGN KEY(name) REFERENCES event_properties(name), FOREIGN KEY(event_name) REFERENCES events(name))")
     cursor.execute(
-        "CREATE TABLE IF NOT EXISTS user_properties (name TEXT UNIQUE, event_name TEXT, volume INTEGER, first_seen TEXT, last_seen TEXT, FOREIGN KEY(event_name) REFERENCES events(name))")
+        "CREATE TABLE IF NOT EXISTS user_properties (name TEXT, event_name TEXT, volume INTEGER, first_seen TEXT, last_seen TEXT, FOREIGN KEY(event_name) REFERENCES events(name))")
     cursor.execute(
-        "CREATE TABLE IF NOT EXISTS user_properties_values (name TEXT UNIQUE, event_name TEXT, value TEXT, volume INTEGER, first_seen TEXT, last_seen TEXT, FOREIGN KEY(name) REFERENCES user_properties (name), FOREIGN KEY(event_name) REFERENCES events(name))")
+        "CREATE TABLE IF NOT EXISTS user_properties_values (name TEXT, event_name TEXT, value TEXT, volume INTEGER, first_seen TEXT, last_seen TEXT, FOREIGN KEY(name) REFERENCES user_properties (name), FOREIGN KEY(event_name) REFERENCES events(name))")
     cursor.close()
 
 
