@@ -33,7 +33,7 @@ def fetch_amplitude_data(start_time, end_time, project_id, api_key, secret_key):
         response = requests.get(url, headers=headers, stream=True)
         response.raise_for_status()  # Raise HTTPError for bad responses (4xx or 5xx)
 
-        # Local directory writable on Databricks
+        # Local directory to write temp gzip and JSON files
         directory_path = './output/' + start_time
 
         # Decompress the ZIP folder, then each individual gzipped file
@@ -42,7 +42,6 @@ def fetch_amplitude_data(start_time, end_time, project_id, api_key, secret_key):
             subfolder_path = directory_path + '/' + '/' + project_id
             print('Unzipped to ' + subfolder_path)
             for filename in os.listdir(subfolder_path):
-                print('Found file or folder: ' + filename)
                 file_path = os.path.join(subfolder_path, filename)
                 if os.path.isfile(file_path):  # Ensure it's a file, not a subdirectory
                     print(f"Found file: {filename}")
@@ -87,9 +86,7 @@ def generate_intervals(start_date, end_date):
 
 if __name__ == '__main__':
     daily_intervals = generate_intervals(START_DATE, END_DATE)
-    all_events = []
     connect_to_db()
     for start, end in daily_intervals:
         for event in fetch_amplitude_data(start, end, PROJECT_ID, API_KEY, SECRET_KEY):
             check_and_write_event_to_db(event)
-        print(f"Fetched {len(all_events)} events")
