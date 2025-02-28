@@ -8,7 +8,7 @@ import os
 import json
 from datetime import datetime, timedelta
 
-from models.db import check_and_write_event_to_db, connect_to_db
+from models.db import check_and_write_event_to_db, close_connection_to_db, connect_to_db
 
 load_dotenv(override=True)
 
@@ -90,3 +90,4 @@ if __name__ == '__main__':
     for start, end in daily_intervals:
         for event in fetch_amplitude_data(start, end, PROJECT_ID, API_KEY, SECRET_KEY):
             check_and_write_event_to_db(event)
+    close_connection_to_db()

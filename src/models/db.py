@@ -92,7 +92,7 @@ def process_property(new_property_type, new_event_name, new_event_time, new_prop
 
 def close_connection_to_db():
     print(
-        f'Conntected to SQLite with total changes: {connection.total_changes}')
+        f'Disconnecting from SQLite with total changes: {connection.total_changes}')
     connection.close()
 
 
@@ -145,3 +145,4 @@ def check_and_write_event_to_db(event):
         process_property('user', event_name, event_time, user_property)
         process_property_value(
             'user', event_name, event_time, user_property, user_property_value)
+    
